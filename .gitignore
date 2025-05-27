@@ -1,0 +1,16 @@
+# Byggfiler
+dist/
+docs/
+
+# node-moduler
+node_modules/
+
+# deploy-cache
+node_modules/.cache/
+
+# OS-filer
+.DS_Store
+
+# IDE-filer
+.vscode/
+*.log
