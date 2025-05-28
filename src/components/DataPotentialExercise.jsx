@@ -156,6 +156,10 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     );
   })();
 
+  React.useEffect(() => {
+    setPressedId(null);
+  }, [step]);
+
   return (
     <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
       {step === 0 && introStep}
