@@ -103,7 +103,9 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             tabIndex={0}
             onClick={() => {
               setPressedId(`${s.id}:${option.text}`);
-              handleAnswer(s.id, option.score);
+              setTimeout(() => {
+                handleAnswer(s.id, option.score);
+              }, 100);
             }}
             className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
           >
