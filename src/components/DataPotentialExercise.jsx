@@ -98,7 +98,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         {s.options.map((option, idx) => (
           <button
-            key={idx}
+            key={`${s.id}-${idx}`}
             type="button"
             onClick={() => {
               setPressedId(`${s.id}:${option.text}`);
