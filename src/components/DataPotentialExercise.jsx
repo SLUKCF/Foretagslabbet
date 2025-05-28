@@ -72,9 +72,9 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   ];
 
   const introStep = (
-    <div className="text-center max-w-2xl mx-auto">
-      <h2 className="text-4xl font-bold mb-6">Potentialen i din data</h2>
-      <p className="text-xl mb-6">
+    <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
+      <h2 className="text-3xl sm:text-4xl font-bold mb-6">Potentialen i din data</h2>
+      <p className="text-base sm:text-lg mb-6">
         Du kommer nu få ta del av en berättelse som handlar om att utveckla en åkermark med hjälp av AI. 
         I varje steg får du ta ställning till olika val kopplade till data, kontroll och värdeskapande.
       </p>
@@ -89,20 +89,20 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   const scenarioStep = (s) => (
     <div className="text-center">
-      <h2 className="text-3xl font-bold mb-4">{s.title}</h2>
-      <p className="text-xl mb-6 max-w-2xl mx-auto">{s.text}</p>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-4">{s.title}</h2>
+      <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         {s.options.map((option, idx) => (
           <button
             key={idx}
             onClick={() => handleAnswer(s.id, option.score)}
-            className="py-3 px-6 rounded-lg text-xl font-semibold transition-colors duration-300 bg-white/10 hover:bg-white/20"
+            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 bg-white/10 hover:bg-white/20 w-full"
           >
             {option.text}
           </button>
         ))}
       </div>
-      <button onClick={back} className="mt-6 text-sm underline">
+      <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
         Tillbaka
       </button>
     </div>
@@ -112,7 +112,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     const compass = calculateCompassData();
     return (
       <div className="text-center max-w-3xl mx-auto">
-        <h2 className="text-3xl font-bold mb-6">Din AI-kompass</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Din AI-kompass</h2>
         <div onClick={() => setViewMode(viewMode === "bars" ? "mosaic" : "bars")} className="cursor-pointer">
           {viewMode === "bars" ? (
             <CompassBarChart
@@ -147,7 +147,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   })();
 
   return (
-    <div className="flex flex-col items-center justify-center text-center p-8 w-full max-w-5xl">
+    <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
       {step === 0 && introStep}
       {step > 0 && step <= scenarios.length && scenarioStep(scenarios[step - 1])}
       {step === scenarios.length + 1 && summaryStep}

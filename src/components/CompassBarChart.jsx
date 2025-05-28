@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const labels = {
@@ -24,11 +23,11 @@ const getHeight = (v) => {
 
 export default function CompassBarChart({ data }) {
   return (
-    <div className="w-full max-w-4xl mx-auto">
-      <div className="grid grid-cols-4 gap-6 text-center">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center">
         {Object.keys(data.current).map((key) => (
           <div key={key} className="flex flex-col items-center">
-            <div className="relative w-12 h-48 bg-white/10 rounded shadow-inner">
+            <div className="relative w-12 h-40 sm:h-48 bg-white/10 rounded shadow-inner">
               {/* Genomsnittlig stapel */}
               <div
                 className="absolute bottom-0 left-0 w-full bg-white/30 rounded-t"
@@ -41,9 +40,9 @@ export default function CompassBarChart({ data }) {
               ></div>
             </div>
             <div className="mt-2">
-              <p className="text-sm font-semibold">{labels[key]}</p>
-              <p className="text-xs text-white/60">Du: {valueLabel(data.current[key])}</p>
-              <p className="text-xs text-white/40">Snitt: {valueLabel(data.average[key])}</p>
+              <p className="text-xs sm:text-sm font-semibold">{labels[key]}</p>
+              <p className="text-[10px] sm:text-xs text-white/60">Du: {valueLabel(data.current[key])}</p>
+              <p className="text-[10px] sm:text-xs text-white/40">Snitt: {valueLabel(data.average[key])}</p>
             </div>
           </div>
         ))}
