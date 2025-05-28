@@ -15,11 +15,20 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   };
 
   const handleAnswer = (questionId, score) => {
-    setAnswers({ ...answers, [questionId]: score });
-    document.activeElement?.blur(); // fixes stuck button styles on iOS
-    setTimeout(() => {
+    setAnswers((prev) => ({ ...prev, [questionId]: score }));
+    document.activeElement?.blur();
+
+    const button = document.activeElement;
+    if (button && typeof button.blur === "function") {
+      button.blur();
+      button.disabled = true;
+      setTimeout(() => {
+        button.disabled = false;
+        next();
+      }, 50);
+    } else {
       next();
-    }, 100);
+    }
   };
 
   const calculateCompassData = () => {
