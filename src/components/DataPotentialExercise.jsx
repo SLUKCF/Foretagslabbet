@@ -16,6 +16,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   const handleAnswer = (questionId, score) => {
     setAnswers({ ...answers, [questionId]: score });
+    document.activeElement?.blur(); // fixes stuck button styles on iOS
     next();
   };
 

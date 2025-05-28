@@ -13,7 +13,7 @@ export default defineConfig({
         name: 'Företagslabbet',
         short_name: 'Företagslabbet',
         description: 'En pedagogisk webbapp för AI i företagande',
-        theme_color: '#00A6A6',
+        theme_color: '#007B87',
         icons: [
           {
             src: 'trio_NY_192x192.png',
