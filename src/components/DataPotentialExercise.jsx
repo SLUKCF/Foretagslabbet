@@ -7,7 +7,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
   const [pressedId, setPressedId] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
@@ -16,14 +15,13 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     setAnswers({});
   };
 
-  const handleAnswer = (questionId, score) => {
+  const handleAnswer = (questionId, score, text) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
-    setPressedId(null);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        next();
-      });
-    });
+    setPressedId(`${questionId}:${text}`);
+    setTimeout(() => {
+      setPressedId(null);
+      next();
+    }, 700);
   };
 
   const calculateCompassData = () => {
@@ -99,27 +97,22 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{s.title}</h2>
       <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
-        {s.options.map((option, idx) => (
-          <div
-            key={`${s.id}-${idx}`}
-            role="button"
-            tabIndex={0}
-            onClick={() => setSelectedOption(option)}
-            className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full 
-              ${selectedOption === option ? "bg-[#CEDA00] text-black" : "bg-white/10 hover:bg-white/20"} focus:outline-none`}
-          >
-            {option.text}
-          </div>
-        ))}
+        {s.options.map((option, idx) => {
+          const isPressed = pressedId === `${s.id}:${option.text}`;
+          return (
+            <div
+              key={`${s.id}-${idx}`}
+              role="button"
+              tabIndex={0}
+              onClick={() => handleAnswer(s.id, option.score, option.text)}
+              className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full
+                ${isPressed ? "bg-[#CEDA00] text-black" : "bg-white/10 hover:bg-white/20"} focus:outline-none`}
+            >
+              {option.text}
+            </div>
+          );
+        })}
       </div>
-      {selectedOption && (
-        <button
-          onClick={() => handleAnswer(s.id, selectedOption.score)}
-          className="mt-6 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
-        >
-          Fortsätt
-        </button>
-      )}
       <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
         Tillbaka
       </button>
@@ -166,7 +159,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   useEffect(() => {
     setPressedId(null);
-    setSelectedOption(null);
   }, [step]);
 
   return (
