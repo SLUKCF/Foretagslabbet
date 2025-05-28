@@ -163,7 +163,11 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   return (
     <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
       {step === 0 && introStep}
-      {step > 0 && step <= scenarios.length && scenarioStep(scenarios[step - 1])}
+      {step > 0 && step <= scenarios.length && (
+        <React.Fragment key={step}>
+          {scenarioStep(scenarios[step - 1])}
+        </React.Fragment>
+      )}
       {step === scenarios.length + 1 && summaryStep}
     </div>
   );
