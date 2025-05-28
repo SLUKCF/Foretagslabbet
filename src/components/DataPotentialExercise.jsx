@@ -14,7 +14,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     setAnswers({});
   };
 
-  const handleAnswer = (questionId, score) => {
+  const handleAnswer = (questionId, score, text) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
     next();
   };
@@ -97,7 +97,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             key={`${s.id}-${idx}`}
             role="button"
             tabIndex={0}
-            onClick={() => handleAnswer(s.id, option.score)}
+            onClick={() => handleAnswer(s.id, option.score, option.text)}
             className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
           >
             {option.text}
