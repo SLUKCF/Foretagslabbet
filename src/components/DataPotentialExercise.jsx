@@ -97,17 +97,18 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         {s.options.map((option, idx) => (
-          <button
+          <div
             key={`${s.id}-${idx}`}
-            type="button"
+            role="button"
+            tabIndex={0}
             onClick={() => {
               setPressedId(`${s.id}:${option.text}`);
               handleAnswer(s.id, option.score);
             }}
-            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20"
+            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
           >
             {option.text}
-          </button>
+          </div>
         ))}
       </div>
       <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
