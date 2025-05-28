@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CompassBarChart from "./CompassBarChart";
 import CompassMosaicChart from "./CompassMosaicChart";
 
@@ -7,6 +7,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
   const [pressedId, setPressedId] = useState(null);
+  const focusResetRef = useRef(null);
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
@@ -156,12 +157,19 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     );
   })();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setPressedId(null);
+    focusResetRef.current?.focus();
   }, [step]);
 
   return (
     <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+      <input
+        ref={focusResetRef}
+        type="text"
+        className="absolute opacity-0 w-0 h-0 pointer-events-none"
+        tabIndex="-1"
+      />
       {step === 0 && introStep}
       {step > 0 && step <= scenarios.length && (
         <React.Fragment key={step}>
