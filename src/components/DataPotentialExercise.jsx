@@ -6,6 +6,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
+  const [pressedId, setPressedId] = useState(null);
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
@@ -16,19 +17,10 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   const handleAnswer = (questionId, score) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
-    document.activeElement?.blur();
-
-    const button = document.activeElement;
-    if (button && typeof button.blur === "function") {
-      button.blur();
-      button.disabled = true;
-      setTimeout(() => {
-        button.disabled = false;
-        next();
-      }, 50);
-    } else {
+    setTimeout(() => {
+      setPressedId(null);
       next();
-    }
+    }, 100);
   };
 
   const calculateCompassData = () => {
@@ -108,9 +100,13 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
           <button
             key={idx}
             type="button"
-            onPointerDown={() => document.activeElement?.blur()}
-            onClick={() => handleAnswer(s.id, option.score)}
-            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 bg-white/10 hover:bg-white/20 w-full"
+            onClick={() => {
+              setPressedId(option.text);
+              handleAnswer(s.id, option.score);
+            }}
+            className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full ${
+              pressedId === option.text ? "bg-white/20" : "bg-white/10 hover:bg-white/20"
+            }`}
           >
             {option.text}
           </button>
