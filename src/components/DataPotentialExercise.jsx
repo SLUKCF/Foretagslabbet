@@ -6,7 +6,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
-  const [pressedId, setPressedId] = useState(null);
 
   const next = () => setStep((s) => s + 1);
   const back = () => setStep((s) => s - 1);
@@ -15,13 +14,9 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     setAnswers({});
   };
 
-  const handleAnswer = (questionId, score, text) => {
+  const handleAnswer = (questionId, score) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
-    setPressedId(`${questionId}:${text}`);
-    setTimeout(() => {
-      setPressedId(null);
-      next();
-    }, 700);
+    next();
   };
 
   const calculateCompassData = () => {
@@ -97,21 +92,17 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{s.title}</h2>
       <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
-        {s.options.map((option, idx) => {
-          const isPressed = pressedId === `${s.id}:${option.text}`;
-          return (
-            <div
-              key={`${s.id}-${idx}`}
-              role="button"
-              tabIndex={0}
-              onClick={() => handleAnswer(s.id, option.score, option.text)}
-              className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full
-                ${isPressed ? "bg-[#CEDA00] text-black" : "bg-white/10 hover:bg-white/20"} focus:outline-none`}
-            >
-              {option.text}
-            </div>
-          );
-        })}
+        {s.options.map((option, idx) => (
+          <div
+            key={`${s.id}-${idx}`}
+            role="button"
+            tabIndex={0}
+            onClick={() => handleAnswer(s.id, option.score)}
+            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
+          >
+            {option.text}
+          </div>
+        ))}
       </div>
       <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
         Tillbaka
@@ -158,7 +149,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   })();
 
   useEffect(() => {
-    setPressedId(null);
   }, [step]);
 
   return (
