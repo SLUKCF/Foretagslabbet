@@ -17,10 +17,12 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   const handleAnswer = (questionId, score) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
-    setTimeout(() => {
-      setPressedId(null);
-      next();
-    }, 150);
+    setPressedId(null);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        next();
+      });
+    });
   };
 
   const calculateCompassData = () => {
