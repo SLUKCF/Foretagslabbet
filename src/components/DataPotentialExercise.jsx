@@ -96,6 +96,8 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
         {s.options.map((option, idx) => (
           <button
             key={idx}
+            type="button"
+            onMouseDown={() => document.activeElement?.blur()}
             onClick={() => handleAnswer(s.id, option.score)}
             className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 bg-white/10 hover:bg-white/20 w-full"
           >
