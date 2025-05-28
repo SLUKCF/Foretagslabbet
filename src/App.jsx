@@ -27,7 +27,7 @@ function App() {
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
         <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20">
-          v1.0.6
+          v1.0.7
         </div>
       </div>
     </div>

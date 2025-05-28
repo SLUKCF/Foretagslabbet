@@ -20,7 +20,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     setTimeout(() => {
       setPressedId(null);
       next();
-    }, 100);
+    }, 150);
   };
 
   const calculateCompassData = () => {
@@ -101,11 +101,11 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             key={idx}
             type="button"
             onClick={() => {
-              setPressedId(option.text);
+              setPressedId(`${s.id}:${option.text}`);
               handleAnswer(s.id, option.score);
             }}
             className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full ${
-              pressedId === option.text ? "bg-white/20" : "bg-white/10 hover:bg-white/20"
+              pressedId === `${s.id}:${option.text}` ? "bg-white/20" : "bg-white/10 hover:bg-white/20"
             }`}
           >
             {option.text}
