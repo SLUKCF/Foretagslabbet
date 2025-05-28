@@ -8,7 +8,7 @@ function App() {
   const [view, setView] = React.useState("loop");
 
   return (
-    <div className="w-screen h-screen text-white flex items-center justify-center overflow-hidden">
+    <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-hidden">
       <div className="fixed inset-0 bg-[#007b87] z-0"></div>
       <div className="relative z-10 w-full h-full flex items-center justify-center">
         {view === "loop" && <LoopScreen onContinue={() => setView("menu")} />}
@@ -26,6 +26,9 @@ function App() {
           />
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
+        <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20">
+          v1.0.1
+        </div>
       </div>
     </div>
   );
