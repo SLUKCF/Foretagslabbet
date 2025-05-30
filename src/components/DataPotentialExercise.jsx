@@ -17,6 +17,12 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const handleAnswer = (questionId, score, text) => {
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
     next();
+    // Force blur after a short delay to ensure it happens after navigation
+    setTimeout(() => {
+      if (document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
+    }, 50);
   };
 
   const calculateCompassData = () => {
@@ -155,13 +161,30 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   // Clear focus when step changes to prevent iOS Safari focus persistence
   useEffect(() => {
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
+    // Multiple approaches to clear focus on iOS
+    const clearFocus = () => {
+      if (document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
+      // Also try to focus the container to remove focus from buttons
+      const container = document.querySelector('[data-step-container]');
+      if (container) {
+        container.focus();
+        container.blur();
+      }
+    };
+    
+    clearFocus();
+    // Also clear focus after a short delay
+    setTimeout(clearFocus, 100);
   }, [step]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+    <div 
+      className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl"
+      data-step-container
+      tabIndex={-1}
+    >
       {step === 0 && introStep}
       {step > 0 && step <= scenarios.length && (
         <React.Fragment key={step}>
