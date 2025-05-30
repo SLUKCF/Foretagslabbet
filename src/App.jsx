@@ -3,6 +3,7 @@ import LoopScreen from "./components/LoopScreen";
 import MenuView from "./components/MenuView";
 import DataPotentialExercise from "./components/DataPotentialExercise";
 import AdviceView from "./components/AdviceView";
+import HistoryView from "./components/HistoryView";
 
 function App() {
   const [view, setView] = React.useState("loop");
@@ -16,6 +17,7 @@ function App() {
           <MenuView
             onStartExercise={() => setView("exercise")}
             onShowAdvice={() => setView("advice")}
+            onShowHistory={() => setView("history")}
             onBack={() => setView("loop")}
           />
         )}
@@ -26,8 +28,9 @@ function App() {
           />
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
+        {view === "history" && <HistoryView onBack={() => setView("menu")} />}
         <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20">
-          v1.0.38
+          v1.0.39
         </div>
       </div>
     </div>
