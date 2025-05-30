@@ -190,18 +190,25 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                 {scenario.options.map((option, idx) => (
                   <button
                     key={`${scenario.id}-${idx}`}
+                    type="button"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
+                    onTouchStart={(e) => e.preventDefault()}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onFocus={(e) => e.target.blur()}
                     disabled={answers[scenario.id] !== undefined}
-                    onFocus={(e) => e.target.blur()} // Immediately blur any focused button
+                    tabIndex={-1}
                     style={{
                       touchAction: 'manipulation',
-                      WebkitTapHighlightColor: 'transparent'
+                      WebkitTapHighlightColor: 'transparent',
+                      WebkitTouchCallout: 'none',
+                      WebkitUserSelect: 'none',
+                      userSelect: 'none'
                     }}
                     className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
                       answers[scenario.id] === option.score
                         ? 'bg-[#CEDA00] text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none`}
+                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none active:scale-95`}
                   >
                     {option.text}
                   </button>
