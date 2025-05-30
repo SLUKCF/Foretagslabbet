@@ -32,6 +32,10 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       setShowSummary(false);
       setCurrentScenario(scenarios.length - 1);
     } else if (currentScenario > 0) {
+      // Remove the answer for the current scenario and go back
+      const newAnswers = { ...answers };
+      delete newAnswers[scenarios[currentScenario].id];
+      setAnswers(newAnswers);
       setCurrentScenario(currentScenario - 1);
     } else {
       setShowIntro(true);
@@ -188,11 +192,16 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                     key={`${scenario.id}-${idx}`}
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
                     disabled={answers[scenario.id] !== undefined}
+                    onFocus={(e) => e.target.blur()} // Immediately blur any focused button
+                    style={{
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent'
+                    }}
                     className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
                       answers[scenario.id] === option.score
                         ? 'bg-[#CEDA00] text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''}`}
+                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none`}
                   >
                     {option.text}
                   </button>
@@ -205,13 +214,14 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
       {/* Navigation */}
       <div className="mt-8 flex gap-4">
-        <button 
-          onClick={goBack} 
-          className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
-          disabled={showIntro}
-        >
-          Tillbaka
-        </button>
+        {(currentScenario > 0 || showSummary) && (
+          <button 
+            onClick={goBack} 
+            className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
+          >
+            Tillbaka
+          </button>
+        )}
       </div>
     </div>
   );
