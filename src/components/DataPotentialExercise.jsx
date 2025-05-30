@@ -17,12 +17,29 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       if (document.activeElement && document.activeElement.blur) {
         document.activeElement.blur();
       }
+      
+      // Also remove any visual focus styling from all buttons
+      const buttons = document.querySelectorAll('button');
+      buttons.forEach(button => {
+        button.style.outline = 'none';
+        button.style.boxShadow = 'none';
+        button.style.border = 'none';
+        // Force background to its computed style without focus
+        if (button.classList.contains('bg-white/10')) {
+          button.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        }
+      });
     };
 
-    // Delay to ensure DOM is ready
+    // Run immediately and after a delay
+    preventAutoFocus();
     const timer = setTimeout(preventAutoFocus, 100);
+    const timer2 = setTimeout(preventAutoFocus, 500);
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
   }, [currentScenario]);
 
   const restart = () => {
@@ -235,11 +252,11 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                       outline: 'none',
                       border: 'none'
                     }}
-                    className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
+                    className={`no-focus-styles py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
                       answers[scenario.id] === option.score
                         ? 'bg-[#CEDA00] text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined || isTransitioning ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none active:scale-95`}
+                    } ${answers[scenario.id] !== undefined || isTransitioning ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
                     {option.text}
                   </button>

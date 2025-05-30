@@ -48,3 +48,31 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
+
+/* Very specific class to override all focus/active styles */
+.no-focus-styles {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.no-focus-styles:focus,
+.no-focus-styles:active,
+.no-focus-styles:hover:focus,
+.no-focus-styles:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  background-color: inherit !important;
+  transform: none !important;
+  opacity: inherit !important;
+}
+
+/* Override any Tailwind focus utilities */
+.no-focus-styles.focus\:outline-none:focus {
+  outline: none !important;
+}
+
+.no-focus-styles.active\:scale-95:active {
+  transform: none !important;
+}
