@@ -8,6 +8,11 @@ import HistoryView from "./components/HistoryView";
 function App() {
   const [view, setView] = React.useState("loop");
   const [previousView, setPreviousView] = React.useState("loop");
+  const [sessionHistory, setSessionHistory] = React.useState([]);
+
+  const logSession = (sessionData) => {
+    setSessionHistory((prev) => [...prev, sessionData]);
+  };
 
   return (
     <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-hidden">
@@ -25,12 +30,18 @@ function App() {
           <DataPotentialExercise
             onBack={() => setView("menu")}
             onAdvice={() => setView("advice")}
+            onLogSession={logSession}
           />
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
-        {view === "history" && <HistoryView onBack={() => setView(previousView)} />}
+        {view === "history" && (
+          <HistoryView
+            onBack={() => setView(previousView)}
+            sessionHistory={sessionHistory}
+          />
+        )}
         <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20 flex items-center gap-2">
-          <span>v1.0.41</span>
+          <span>v1.0.42</span>
           <button
             onClick={() => {
               setPreviousView(view);

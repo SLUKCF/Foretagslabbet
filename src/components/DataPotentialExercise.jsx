@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import CompassBarChart from "./CompassBarChart";
 import CompassMosaicChart from "./CompassMosaicChart";
 
-export default function DataPotentialExercise({ onBack, onAdvice }) {
+export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }) {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
+  const [sessionStartTime, setSessionStartTime] = useState(null);
 
   const restart = () => {
     setCurrentScenario(0);
@@ -105,7 +106,10 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             I varje steg får du ta ställning till olika val kopplade till data, kontroll och värdeskapande.
           </p>
           <button
-            onClick={() => setShowIntro(false)}
+            onClick={() => {
+              setSessionStartTime(new Date());
+              setShowIntro(false);
+            }}
             className="mt-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
           >
             Börja
@@ -116,6 +120,15 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   }
 
   if (showSummary) {
+    useEffect(() => {
+      const endTime = new Date();
+      onLogSession({
+        answers,
+        startTime: sessionStartTime,
+        endTime: endTime
+      });
+    }, [onLogSession, answers, sessionStartTime]);
+
     const compass = calculateCompassData();
     return (
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
