@@ -93,6 +93,8 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   if (showIntro) {
     return (
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+        {/* Dummy element to steal initial focus in Safari */}
+        <div tabIndex="-1" className="opacity-0 absolute top-0 left-0 w-1 h-1"></div>
         <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">Potentialen i din data</h2>
           <p className="text-base sm:text-lg mb-6">
