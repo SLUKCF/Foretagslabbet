@@ -153,25 +153,23 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   }
 
   return (
-    <div className={`transition-all duration-500 ease-in-out transform ${
-      showIntro ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
-    }`}>
-      <div className="relative w-full max-w-2xl">
-        {/* Progress indicator */}
-        <div className="w-full max-w-md mb-8">
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-white/70">Scenario {currentScenario + 1} av {scenarios.length}</span>
-            <span className="text-sm text-white/70">{Math.round(((currentScenario + 1) / scenarios.length) * 100)}%</span>
-          </div>
-          <div className="w-full bg-white/20 rounded-full h-2">
-            <div 
-              className="bg-[#CEDA00] h-2 rounded-full transition-all duration-500 ease-out"
-              style={{ width: `${((currentScenario + 1) / scenarios.length) * 100}%` }}
-            ></div>
-          </div>
+    <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+      {/* Progress indicator */}
+      <div className="w-full max-w-md mb-8">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm text-white/70">Scenario {currentScenario + 1} av {scenarios.length}</span>
+          <span className="text-sm text-white/70">{Math.round(((currentScenario + 1) / scenarios.length) * 100)}%</span>
         </div>
+        <div className="w-full bg-white/20 rounded-full h-2">
+          <div 
+            className="bg-[#CEDA00] h-2 rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${((currentScenario + 1) / scenarios.length) * 100}%` }}
+          ></div>
+        </div>
+      </div>
 
-        {/* All scenarios rendered but only current one visible */}
+      {/* All scenarios rendered but only current one visible */}
+      <div className="relative w-full max-w-2xl">
         {scenarios.map((scenario, index) => (
           <div
             key={scenario.id}
@@ -193,11 +191,8 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                     tabIndex="-1"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
                     disabled={answers[scenario.id] !== undefined}
-                    className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
-                      answers[scenario.id] === option.score
-                        ? 'bg-[#CEDA00] text-black'
-                        : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''}`}
+                    className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full 
+                      bg-white/10 hover:bg-white/20 text-white ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
                     {option.text}
                   </button>
@@ -206,17 +201,17 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             </div>
           </div>
         ))}
+      </div>
 
-        {/* Navigation */}
-        <div className="mt-8 flex gap-4">
-          <button 
-            onClick={goBack} 
-            className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
-            disabled={showIntro}
-          >
-            Tillbaka
-          </button>
-        </div>
+      {/* Navigation */}
+      <div className="mt-8 flex gap-4">
+        <button 
+          onClick={goBack} 
+          className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
+          disabled={showIntro}
+        >
+          Tillbaka
+        </button>
       </div>
     </div>
   );
