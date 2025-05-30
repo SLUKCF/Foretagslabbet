@@ -26,13 +26,6 @@ export default function MenuView({ onStartExercise, onShowAdvice, onBack }) {
       </div>
 
       <button
-        onClick={() => onSelect("history")}
-        className="w-full sm:w-fit mb-4 px-6 py-4 text-base sm:text-lg font-semibold bg-white/20 text-white rounded hover:bg-white/30"
-      >
-        Visa historik
-      </button>
-
-      <button
         onClick={onBack}
         className="mt-6 text-xs sm:text-sm underline"
       >

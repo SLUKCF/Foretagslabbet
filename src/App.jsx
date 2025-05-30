@@ -7,6 +7,7 @@ import HistoryView from "./components/HistoryView";
 
 function App() {
   const [view, setView] = React.useState("loop");
+  const [previousView, setPreviousView] = React.useState("loop");
 
   return (
     <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-hidden">
@@ -17,7 +18,6 @@ function App() {
           <MenuView
             onStartExercise={() => setView("exercise")}
             onShowAdvice={() => setView("advice")}
-            onShowHistory={() => setView("history")}
             onBack={() => setView("loop")}
           />
         )}
@@ -28,9 +28,18 @@ function App() {
           />
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
-        {view === "history" && <HistoryView onBack={() => setView("menu")} />}
-        <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20">
-          v1.0.40
+        {view === "history" && <HistoryView onBack={() => setView(previousView)} />}
+        <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20 flex items-center gap-2">
+          <span>v1.0.41</span>
+          <button
+            onClick={() => {
+              setPreviousView(view);
+              setView("history");
+            }}
+            className="text-white/40 hover:text-white underline"
+          >
+            Admin
+          </button>
         </div>
       </div>
     </div>
