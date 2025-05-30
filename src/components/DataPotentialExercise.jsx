@@ -9,12 +9,14 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
   const [sessionStartTime, setSessionStartTime] = useState(null);
+  const [hasLoggedSession, setHasLoggedSession] = useState(false);
 
   const restart = () => {
     setCurrentScenario(0);
     setAnswers({});
     setShowIntro(true);
     setShowSummary(false);
+    setHasLoggedSession(false);
   };
 
   const handleAnswer = (questionId, score, text) => {
@@ -96,15 +98,16 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
 
   // Ensure this useEffect is always at the top level, not inside any conditional
   useEffect(() => {
-    if (showSummary) {
+    if (showSummary && !hasLoggedSession) {
       const endTime = new Date();
       onLogSession({
         answers,
         startTime: sessionStartTime,
         endTime: endTime
       });
+      setHasLoggedSession(true);
     }
-  }, [showSummary, onLogSession, answers, sessionStartTime]);
+  }, [showSummary, hasLoggedSession, onLogSession, answers, sessionStartTime]);
 
   if (showIntro) {
     return (

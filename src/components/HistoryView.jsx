@@ -1,5 +1,3 @@
-
-
 import React from "react";
 
 function HistoryView({ onBack, sessionHistory }) {
@@ -10,25 +8,25 @@ function HistoryView({ onBack, sessionHistory }) {
         Här kan du se alla tidigare AI-kompass-svar.
       </p>
       {sessionHistory.length > 0 ? (
-        <table className="w-full text-left text-sm mt-4">
-          <thead>
+        <table className="table-auto w-full mt-4 bg-white/10 rounded-lg overflow-hidden">
+          <thead className="bg-[#00CEDA]">
             <tr>
-              <th className="py-2 px-4 border-b border-white/20">Starttid</th>
-              <th className="py-2 px-4 border-b border-white/20">Sluttid</th>
-              <th className="py-2 px-4 border-b border-white/20">Svar</th>
+              <th className="py-2 px-4 border-b border-white/20 text-white">Starttid</th>
+              <th className="py-2 px-4 border-b border-white/20 text-white">Sluttid</th>
+              <th className="py-2 px-4 border-b border-white/20 text-white">Resultat</th>
             </tr>
           </thead>
           <tbody>
             {sessionHistory.map((session, index) => (
-              <tr key={index}>
-                <td className="py-1 px-4 border-b border-white/10">
+              <tr key={index} className={index % 2 === 0 ? 'bg-white/5' : 'bg-white/10'}>
+                <td className="py-2 px-4 border-b border-white/20 text-sm text-white">
                   {new Date(session.startTime).toLocaleString()}
                 </td>
-                <td className="py-1 px-4 border-b border-white/10">
+                <td className="py-2 px-4 border-b border-white/20 text-sm text-white">
                   {new Date(session.endTime).toLocaleString()}
                 </td>
-                <td className="py-1 px-4 border-b border-white/10">
-                  {JSON.stringify(session.answers)}
+                <td className="py-2 px-4 border-b border-white/20 text-sm text-white">
+                  {Object.values(session.answers).join(', ')}
                 </td>
               </tr>
             ))}
