@@ -8,23 +8,44 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [viewMode, setViewMode] = useState("bars");
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Effect to prevent auto-focus on iOS
+  useEffect(() => {
+    const preventAutoFocus = () => {
+      // Remove focus from any focused element
+      if (document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
+    };
+
+    // Delay to ensure DOM is ready
+    const timer = setTimeout(preventAutoFocus, 100);
+    
+    return () => clearTimeout(timer);
+  }, [currentScenario]);
 
   const restart = () => {
     setCurrentScenario(0);
     setAnswers({});
     setShowIntro(true);
-    setShowSummary(false);
+    setIsTransitioning(false);
   };
 
   const handleAnswer = (questionId, score, text) => {
     const newAnswers = { ...answers, [questionId]: score };
     setAnswers(newAnswers);
     
-    if (currentScenario < scenarios.length - 1) {
-      setCurrentScenario(currentScenario + 1);
-    } else {
-      setShowSummary(true);
-    }
+    setIsTransitioning(true);
+    
+    setTimeout(() => {
+      if (currentScenario < scenarios.length - 1) {
+        setCurrentScenario(currentScenario + 1);
+      } else {
+        setShowSummary(true);
+      }
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const goBack = () => {
@@ -192,23 +213,39 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                     key={`${scenario.id}-${idx}`}
                     type="button"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
-                    onTouchStart={(e) => e.preventDefault()}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onFocus={(e) => e.target.blur()}
-                    disabled={answers[scenario.id] !== undefined}
+                    onTouchStart={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onTouchEnd={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onFocus={(e) => {
+                      e.preventDefault();
+                      e.target.blur();
+                    }}
+                    disabled={answers[scenario.id] !== undefined || isTransitioning}
                     tabIndex={-1}
+                    autoFocus={false}
                     style={{
                       touchAction: 'manipulation',
                       WebkitTapHighlightColor: 'transparent',
                       WebkitTouchCallout: 'none',
                       WebkitUserSelect: 'none',
-                      userSelect: 'none'
+                      userSelect: 'none',
+                      outline: 'none',
+                      border: 'none'
                     }}
                     className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
                       answers[scenario.id] === option.score
                         ? 'bg-[#CEDA00] text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none active:scale-95`}
+                    } ${answers[scenario.id] !== undefined || isTransitioning ? 'cursor-not-allowed opacity-60' : ''} focus:outline-none active:scale-95`}
                   >
                     {option.text}
                   </button>
