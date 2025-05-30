@@ -8,44 +8,23 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   const [viewMode, setViewMode] = useState("bars");
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  // Effect to prevent auto-focus on iOS
-  useEffect(() => {
-    const preventAutoFocus = () => {
-      // Remove focus from any focused element
-      if (document.activeElement && document.activeElement.blur) {
-        document.activeElement.blur();
-      }
-    };
-
-    // Delay to ensure DOM is ready
-    const timer = setTimeout(preventAutoFocus, 100);
-    
-    return () => clearTimeout(timer);
-  }, [currentScenario]);
 
   const restart = () => {
     setCurrentScenario(0);
     setAnswers({});
     setShowIntro(true);
-    setIsTransitioning(false);
+    setShowSummary(false);
   };
 
   const handleAnswer = (questionId, score, text) => {
     const newAnswers = { ...answers, [questionId]: score };
     setAnswers(newAnswers);
     
-    setIsTransitioning(true);
-    
-    setTimeout(() => {
-      if (currentScenario < scenarios.length - 1) {
-        setCurrentScenario(currentScenario + 1);
-      } else {
-        setShowSummary(true);
-      }
-      setIsTransitioning(false);
-    }, 300);
+    if (currentScenario < scenarios.length - 1) {
+      setCurrentScenario(currentScenario + 1);
+    } else {
+      setShowSummary(true);
+    }
   };
 
   const goBack = () => {
@@ -53,9 +32,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       setShowSummary(false);
       setCurrentScenario(scenarios.length - 1);
     } else if (currentScenario > 0) {
-      const newAnswers = { ...answers };
-      delete newAnswers[scenarios[currentScenario].id];
-      setAnswers(newAnswers);
       setCurrentScenario(currentScenario - 1);
     } else {
       setShowIntro(true);
@@ -210,29 +186,13 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                 {scenario.options.map((option, idx) => (
                   <button
                     key={`${scenario.id}-${idx}`}
-                    type="button"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
-                    onTouchStart={(e) => {
-                      e.stopPropagation();
-                    }}
-                    onMouseDown={(e) => {
-                      e.stopPropagation();
-                    }}
-                    disabled={answers[scenario.id] !== undefined || isTransitioning}
-                    style={{
-                      touchAction: 'manipulation',
-                      WebkitTapHighlightColor: 'transparent',
-                      WebkitTouchCallout: 'none',
-                      WebkitUserSelect: 'none',
-                      userSelect: 'none',
-                      outline: 'none',
-                      border: 'none'
-                    }}
-                    className={`no-focus-styles py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
+                    disabled={answers[scenario.id] !== undefined}
+                    className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
                       answers[scenario.id] === option.score
                         ? 'bg-[#CEDA00] text-black'
                         : 'bg-white/10 hover:bg-white/20 text-white'
-                    } ${answers[scenario.id] !== undefined || isTransitioning ? 'cursor-not-allowed opacity-60' : ''}`}
+                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
                     {option.text}
                   </button>
@@ -245,14 +205,13 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
       {/* Navigation */}
       <div className="mt-8 flex gap-4">
-        {(currentScenario > 0 || showSummary) && (
-          <button 
-            onClick={goBack} 
-            className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
-          >
-            Tillbaka
-          </button>
-        )}
+        <button 
+          onClick={goBack} 
+          className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
+          disabled={showIntro}
+        >
+          Tillbaka
+        </button>
       </div>
     </div>
   );
