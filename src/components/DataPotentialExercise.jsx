@@ -3,25 +3,39 @@ import CompassBarChart from "./CompassBarChart";
 import CompassMosaicChart from "./CompassMosaicChart";
 
 export default function DataPotentialExercise({ onBack, onAdvice }) {
-  const [step, setStep] = useState(0);
+  const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [viewMode, setViewMode] = useState("bars");
+  const [showIntro, setShowIntro] = useState(true);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const next = () => setStep((s) => s + 1);
-  const back = () => setStep((s) => s - 1);
   const restart = () => {
-    setStep(0);
+    setCurrentScenario(0);
     setAnswers({});
+    setShowIntro(true);
+    setShowSummary(false);
   };
 
   const handleAnswer = (questionId, score, text) => {
-    // Immediately blur the current element
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
+    const newAnswers = { ...answers, [questionId]: score };
+    setAnswers(newAnswers);
     
-    setAnswers((prev) => ({ ...prev, [questionId]: score }));
-    next();
+    if (currentScenario < scenarios.length - 1) {
+      setCurrentScenario(currentScenario + 1);
+    } else {
+      setShowSummary(true);
+    }
+  };
+
+  const goBack = () => {
+    if (showSummary) {
+      setShowSummary(false);
+      setCurrentScenario(scenarios.length - 1);
+    } else if (currentScenario > 0) {
+      setCurrentScenario(currentScenario - 1);
+    } else {
+      setShowIntro(true);
+    }
   };
 
   const calculateCompassData = () => {
@@ -76,130 +90,129 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     }
   ];
 
-  const introStep = (
-    <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
-      <h2 className="text-3xl sm:text-4xl font-bold mb-6">Potentialen i din data</h2>
-      <p className="text-base sm:text-lg mb-6">
-        Du kommer nu få ta del av en berättelse som handlar om att utveckla en åkermark med hjälp av AI. 
-        I varje steg får du ta ställning till olika val kopplade till data, kontroll och värdeskapande.
-      </p>
-      <button
-        onClick={next}
-        className="mt-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
-      >
-        Börja
-      </button>
-    </div>
-  );
-
-  const scenarioStep = (s) => (
-    <div className="text-center" key={`scenario-${step}-${s.id}`}>
-      <h2 className="text-2xl sm:text-3xl font-bold mb-4">{s.title}</h2>
-      <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
-      <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
-        {s.options.map((option, idx) => (
-          <button
-            key={`btn-${s.id}-${idx}-${step}-${Date.now()}`}
-            onClick={() => handleAnswer(s.id, option.score, option.text)}
-            onTouchStart={(e) => {
-              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-            }}
-            onTouchEnd={(e) => {
-              e.target.style.backgroundColor = '';
-              e.target.blur();
-            }}
-            onMouseDown={(e) => {
-              e.target.blur();
-            }}
-            style={{
-              touchAction: 'manipulation',
-              WebkitTapHighlightColor: 'transparent',
-              WebkitTouchCallout: 'none',
-              WebkitUserSelect: 'none',
-              userSelect: 'none'
-            }}
-            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
-          >
-            {option.text}
-          </button>
-        ))}
-      </div>
-      <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
-        Tillbaka
-      </button>
-    </div>
-  );
-
-  const summaryStep = (() => {
-    const compass = calculateCompassData();
+  if (showIntro) {
     return (
-      <div className="text-center max-w-3xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Din AI-kompass</h2>
-        <div onClick={() => setViewMode(viewMode === "bars" ? "mosaic" : "bars")} className="cursor-pointer">
-          {viewMode === "bars" ? (
-            <CompassBarChart
-              data={{
-                current: compass,
-                average: {
-                  delningsvilja: 0,
-                  tillit: -1,
-                  öppenhet: 1,
-                  autonomi: 0
-                }
-              }}
-            />
-          ) : (
-            <CompassMosaicChart data={compass} />
-          )}
+      <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+        <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-6">Potentialen i din data</h2>
+          <p className="text-base sm:text-lg mb-6">
+            Du kommer nu få ta del av en berättelse som handlar om att utveckla en åkermark med hjälp av AI. 
+            I varje steg får du ta ställning till olika val kopplade till data, kontroll och värdeskapande.
+          </p>
+          <button
+            onClick={() => setShowIntro(false)}
+            className="mt-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
+          >
+            Börja
+          </button>
         </div>
-        <button
-          onClick={restart}
-          className="mt-6 px-6 py-2 border border-white text-white rounded-lg hover:bg-white/10"
-        >
-          Gör om övningen
-        </button>
-        <button
-          onClick={onAdvice}
-          className="mt-4 ml-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
-        >
-          Nästa: Några råd på vägen
-        </button>
       </div>
     );
-  })();
+  }
 
-  // Clear focus when step changes to prevent iOS Safari focus persistence
-  useEffect(() => {
-    // Force all buttons to lose focus
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-      if (button.blur) {
-        button.blur();
-      }
-    });
-    
-    // Clear active element
-    if (document.activeElement && document.activeElement.blur) {
-      document.activeElement.blur();
-    }
-    
-    // Force reflow to ensure changes take effect
-    document.body.offsetHeight;
-  }, [step]);
+  if (showSummary) {
+    const compass = calculateCompassData();
+    return (
+      <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6">Din AI-kompass</h2>
+          <div onClick={() => setViewMode(viewMode === "bars" ? "mosaic" : "bars")} className="cursor-pointer">
+            {viewMode === "bars" ? (
+              <CompassBarChart
+                data={{
+                  current: compass,
+                  average: {
+                    delningsvilja: 0,
+                    tillit: -1,
+                    öppenhet: 1,
+                    autonomi: 0
+                  }
+                }}
+              />
+            ) : (
+              <CompassMosaicChart data={compass} />
+            )}
+          </div>
+          <button
+            onClick={restart}
+            className="mt-6 px-6 py-2 border border-white text-white rounded-lg hover:bg-white/10"
+          >
+            Gör om övningen
+          </button>
+          <button
+            onClick={onAdvice}
+            className="mt-4 ml-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
+          >
+            Nästa: Några råd på vägen
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div 
-      className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl"
-      data-step-container
-      tabIndex={-1}
-    >
-      {step === 0 && introStep}
-      {step > 0 && step <= scenarios.length && (
-        <React.Fragment key={step}>
-          {scenarioStep(scenarios[step - 1])}
-        </React.Fragment>
-      )}
-      {step === scenarios.length + 1 && summaryStep}
+    <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
+      {/* Progress indicator */}
+      <div className="w-full max-w-md mb-8">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm text-white/70">Scenario {currentScenario + 1} av {scenarios.length}</span>
+          <span className="text-sm text-white/70">{Math.round(((currentScenario + 1) / scenarios.length) * 100)}%</span>
+        </div>
+        <div className="w-full bg-white/20 rounded-full h-2">
+          <div 
+            className="bg-[#CEDA00] h-2 rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${((currentScenario + 1) / scenarios.length) * 100}%` }}
+          ></div>
+        </div>
+      </div>
+
+      {/* All scenarios rendered but only current one visible */}
+      <div className="relative w-full max-w-2xl">
+        {scenarios.map((scenario, index) => (
+          <div
+            key={scenario.id}
+            className={`transition-all duration-500 ease-in-out ${
+              index === currentScenario 
+                ? 'opacity-100 translate-x-0 relative' 
+                : index < currentScenario 
+                  ? 'opacity-0 -translate-x-full absolute inset-0 pointer-events-none'
+                  : 'opacity-0 translate-x-full absolute inset-0 pointer-events-none'
+            }`}
+          >
+            <div className="text-center">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">{scenario.title}</h2>
+              <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{scenario.text}</p>
+              <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
+                {scenario.options.map((option, idx) => (
+                  <button
+                    key={`${scenario.id}-${idx}`}
+                    onClick={() => handleAnswer(scenario.id, option.score, option.text)}
+                    disabled={answers[scenario.id] !== undefined}
+                    className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
+                      answers[scenario.id] === option.score
+                        ? 'bg-[#CEDA00] text-black'
+                        : 'bg-white/10 hover:bg-white/20 text-white'
+                    } ${answers[scenario.id] !== undefined ? 'cursor-not-allowed opacity-60' : ''}`}
+                  >
+                    {option.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Navigation */}
+      <div className="mt-8 flex gap-4">
+        <button 
+          onClick={goBack} 
+          className="px-4 py-2 text-sm underline text-white/70 hover:text-white"
+          disabled={showIntro}
+        >
+          Tillbaka
+        </button>
+      </div>
     </div>
   );
 }
