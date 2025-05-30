@@ -94,6 +94,18 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
     }
   ];
 
+  // Ensure this useEffect is always at the top level, not inside any conditional
+  useEffect(() => {
+    if (showSummary) {
+      const endTime = new Date();
+      onLogSession({
+        answers,
+        startTime: sessionStartTime,
+        endTime: endTime
+      });
+    }
+  }, [showSummary, onLogSession, answers, sessionStartTime]);
+
   if (showIntro) {
     return (
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
@@ -118,17 +130,6 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
       </div>
     );
   }
-
-  useEffect(() => {
-    if (showSummary) {
-      const endTime = new Date();
-      onLogSession({
-        answers,
-        startTime: sessionStartTime,
-        endTime: endTime
-      });
-    }
-  }, [showSummary, onLogSession, answers, sessionStartTime]);
 
   if (showSummary) {
     const compass = calculateCompassData();
