@@ -17,29 +17,12 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       if (document.activeElement && document.activeElement.blur) {
         document.activeElement.blur();
       }
-      
-      // Also remove any visual focus styling from all buttons
-      const buttons = document.querySelectorAll('button');
-      buttons.forEach(button => {
-        button.style.outline = 'none';
-        button.style.boxShadow = 'none';
-        button.style.border = 'none';
-        // Force background to its computed style without focus
-        if (button.classList.contains('bg-white/10')) {
-          button.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-        }
-      });
     };
 
-    // Run immediately and after a delay
-    preventAutoFocus();
+    // Delay to ensure DOM is ready
     const timer = setTimeout(preventAutoFocus, 100);
-    const timer2 = setTimeout(preventAutoFocus, 500);
     
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    };
+    return () => clearTimeout(timer);
   }, [currentScenario]);
 
   const restart = () => {
