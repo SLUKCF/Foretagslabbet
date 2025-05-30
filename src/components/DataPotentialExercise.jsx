@@ -186,6 +186,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                 {scenario.options.map((option, idx) => (
                   <button
                     key={`${scenario.id}-${idx}`}
+                    tabIndex="-1"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
                     disabled={answers[scenario.id] !== undefined}
                     className={`py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-all duration-300 w-full ${
