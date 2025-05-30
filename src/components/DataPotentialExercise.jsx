@@ -15,14 +15,13 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   };
 
   const handleAnswer = (questionId, score, text) => {
+    // Immediately blur the current element
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+    
     setAnswers((prev) => ({ ...prev, [questionId]: score }));
     next();
-    // Force blur after a short delay to ensure it happens after navigation
-    setTimeout(() => {
-      if (document.activeElement && document.activeElement.blur) {
-        document.activeElement.blur();
-      }
-    }, 50);
   };
 
   const calculateCompassData = () => {
@@ -94,22 +93,32 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
   );
 
   const scenarioStep = (s) => (
-    <div className="text-center">
+    <div className="text-center" key={`scenario-${step}-${s.id}`}>
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">{s.title}</h2>
       <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         {s.options.map((option, idx) => (
           <button
-            key={`${s.id}-${idx}-${step}`}
+            key={`btn-${s.id}-${idx}-${step}-${Date.now()}`}
             onClick={() => handleAnswer(s.id, option.score, option.text)}
+            onTouchStart={(e) => {
+              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+            }}
             onTouchEnd={(e) => {
+              e.target.style.backgroundColor = '';
+              e.target.blur();
+            }}
+            onMouseDown={(e) => {
               e.target.blur();
             }}
             style={{
               touchAction: 'manipulation',
-              WebkitTapHighlightColor: 'transparent'
+              WebkitTapHighlightColor: 'transparent',
+              WebkitTouchCallout: 'none',
+              WebkitUserSelect: 'none',
+              userSelect: 'none'
             }}
-            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none active:bg-white/30"
+            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
           >
             {option.text}
           </button>
@@ -161,22 +170,21 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
 
   // Clear focus when step changes to prevent iOS Safari focus persistence
   useEffect(() => {
-    // Multiple approaches to clear focus on iOS
-    const clearFocus = () => {
-      if (document.activeElement && document.activeElement.blur) {
-        document.activeElement.blur();
+    // Force all buttons to lose focus
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      if (button.blur) {
+        button.blur();
       }
-      // Also try to focus the container to remove focus from buttons
-      const container = document.querySelector('[data-step-container]');
-      if (container) {
-        container.focus();
-        container.blur();
-      }
-    };
+    });
     
-    clearFocus();
-    // Also clear focus after a short delay
-    setTimeout(clearFocus, 100);
+    // Clear active element
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+    
+    // Force reflow to ensure changes take effect
+    document.body.offsetHeight;
   }, [step]);
 
   return (
