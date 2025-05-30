@@ -41,7 +41,9 @@ function App() {
           />
         )}
         <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20 flex items-center gap-2">
-          <span>v1.0.42</span>
+          <span>
+            v1.0.43
+          </span>
           <button
             onClick={() => {
               setPreviousView(view);

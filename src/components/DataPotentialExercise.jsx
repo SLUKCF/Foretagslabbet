@@ -119,16 +119,18 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
     );
   }
 
-  if (showSummary) {
-    useEffect(() => {
+  useEffect(() => {
+    if (showSummary) {
       const endTime = new Date();
       onLogSession({
         answers,
         startTime: sessionStartTime,
         endTime: endTime
       });
-    }, [onLogSession, answers, sessionStartTime]);
+    }
+  }, [showSummary, onLogSession, answers, sessionStartTime]);
 
+  if (showSummary) {
     const compass = calculateCompassData();
     return (
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
