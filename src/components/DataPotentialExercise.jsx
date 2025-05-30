@@ -214,15 +214,9 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                     type="button"
                     onClick={() => handleAnswer(scenario.id, option.score, option.text)}
                     onTouchStart={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    onTouchEnd={(e) => {
-                      e.preventDefault();
                       e.stopPropagation();
                     }}
                     onMouseDown={(e) => {
-                      e.preventDefault();
                       e.stopPropagation();
                     }}
                     onFocus={(e) => {
