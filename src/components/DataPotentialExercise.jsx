@@ -53,7 +53,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       setShowSummary(false);
       setCurrentScenario(scenarios.length - 1);
     } else if (currentScenario > 0) {
-      // Remove the answer for the current scenario and go back
       const newAnswers = { ...answers };
       delete newAnswers[scenarios[currentScenario].id];
       setAnswers(newAnswers);
@@ -219,13 +218,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
                     onMouseDown={(e) => {
                       e.stopPropagation();
                     }}
-                    onFocus={(e) => {
-                      e.preventDefault();
-                      e.target.blur();
-                    }}
                     disabled={answers[scenario.id] !== undefined || isTransitioning}
-                    tabIndex={-1}
-                    autoFocus={false}
                     style={{
                       touchAction: 'manipulation',
                       WebkitTapHighlightColor: 'transparent',
