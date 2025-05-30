@@ -93,15 +93,21 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{s.text}</p>
       <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
         {s.options.map((option, idx) => (
-          <div
-            key={`${s.id}-${idx}`}
-            role="button"
-            tabIndex={0}
+          <button
+            key={`${s.id}-${idx}-${step}`}
             onClick={() => handleAnswer(s.id, option.score, option.text)}
-            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none"
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              e.target.blur();
+            }}
+            style={{
+              touchAction: 'manipulation',
+              WebkitTapHighlightColor: 'transparent'
+            }}
+            className="py-3 px-4 sm:px-6 text-sm sm:text-lg rounded-lg font-semibold transition-colors duration-300 w-full bg-white/10 hover:bg-white/20 focus:outline-none active:bg-white/30"
           >
             {option.text}
-          </div>
+          </button>
         ))}
       </div>
       <button onClick={back} className="mt-6 text-xs sm:text-sm underline">
@@ -148,7 +154,11 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
     );
   })();
 
+  // Clear focus when step changes to prevent iOS Safari focus persistence
   useEffect(() => {
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
   }, [step]);
 
   return (
