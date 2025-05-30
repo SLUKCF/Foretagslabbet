@@ -10,10 +10,41 @@ html, body {
   overscroll-behavior: none;
 }
 
+/* Comprehensive iOS button fix */
 button {
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  outline: none !important;
+  border: none;
 }
 
-button:focus {
-  outline: none;
+button:focus,
+button:active,
+button:hover:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  /* Prevent background color changes on focus/active */
+  background-color: inherit;
+  /* Prevent any transforms on focus/active */
+  transform: none !important;
+}
+
+/* Specifically target buttons that might get auto-selected */
+button:focus-visible {
+  outline: none !important;
+}
+
+/* Reset any default button styles that might cause visual selection */
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* Prevent iOS from applying default button styling */
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
