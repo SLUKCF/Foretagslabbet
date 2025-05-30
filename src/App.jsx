@@ -30,7 +30,7 @@ function App() {
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
         {view === "history" && <HistoryView onBack={() => setView("menu")} />}
         <div className="absolute bottom-2 right-2 text-xs text-white/60 z-20">
-          v1.0.39
+          v1.0.40
         </div>
       </div>
     </div>

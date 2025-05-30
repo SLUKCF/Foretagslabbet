@@ -33,7 +33,7 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
       setCurrentScenario(scenarios.length - 1);
     } else if (currentScenario > 0) {
       const newAnswers = { ...answers };
-      delete newAnswers[scenarios[currentScenario].id];
+      delete newAnswers[scenarios[currentScenario - 1].id];
       setAnswers(newAnswers);
       setCurrentScenario(currentScenario - 1);
     } else {
