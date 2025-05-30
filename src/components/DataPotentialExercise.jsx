@@ -97,7 +97,6 @@ export default function DataPotentialExercise({ onBack, onAdvice }) {
             key={`${s.id}-${idx}-${step}`}
             onClick={() => handleAnswer(s.id, option.score, option.text)}
             onTouchEnd={(e) => {
-              e.preventDefault();
               e.target.blur();
             }}
             style={{
