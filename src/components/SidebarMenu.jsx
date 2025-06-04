@@ -62,13 +62,16 @@ export default function SidebarMenu({ isOpen, onClose, onNavigate }) {
                 Historik
             </button>
             <button
-            className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
+                onClick={() => {
+                onNavigate("omoss");
+                }}
+                className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
             >
                 Om oss
             </button>
         </nav>
       <div className="mt-auto px-4 py-2 text-xs text-white/50 border-t border-white/20">
-        v1.0.49
+        v1.0.52
       </div>
       </aside>
     </>

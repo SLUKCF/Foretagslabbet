@@ -5,6 +5,7 @@ import AiStartScreen from "./components/AiStartScreen";
 import AiExercise from "./components/AiExercise";
 import AiAdviceScreen from "./components/AiAdviceScreen";
 import HistoryScreen from "./components/HistoryScreen";
+import OmOssScreen from "./components/OmOssScreen";
 
 function App() {
   const [view, setView] = React.useState("home");
@@ -92,6 +93,9 @@ function App() {
             onBack={() => setView(previousView)}
             sessionHistory={sessionHistory}
           />
+        )}
+        {view === "omoss" && (
+          <OmOssScreen onBack={() => setView(previousView)} />
         )}
       </div>
     </div>

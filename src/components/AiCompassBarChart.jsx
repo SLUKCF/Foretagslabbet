@@ -23,7 +23,7 @@ const getHeight = (v) => {
 
 export default function AiCompassBarChart({ data }) {
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 mt-4">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10 text-center">
         {Object.keys(data.current).map((key) => (
           <div key={key} className="flex flex-col items-center">
@@ -35,17 +35,21 @@ export default function AiCompassBarChart({ data }) {
                 style={{ height: getHeight(data.current[key]) }}
               ></div>
 
-              {/* Linje som visar medelvärde */}
-              <div
-                className="absolute left-0 w-full h-[2px] bg-white/40"
-                style={{ bottom: getHeight(data.average[key]) }}
-              ></div>
-
-              {/* Cirkelmarkör vid medelvärdet */}
-              <div
-                className="absolute right-[-4px] w-2 h-2 bg-white rounded-full"
-                style={{ bottom: `calc(${getHeight(data.average[key])} - 4px)` }}
-              ></div>
+              {/* Pilmarkör vid medelvärdet */}
+              <svg
+                className="absolute z-10 right-[-6px] w-4 h-4 text-white transform rotate-180"
+                style={{
+                  bottom:
+                    data.average[key] <= -1
+                      ? "0px"
+                      : `calc(${getHeight(data.average[key])} - 8px)`,
+                }}
+                viewBox="0 0 8 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M8 6 L0 0 V12 L8 6 Z" fill="currentColor" />
+              </svg>
             </div>
 
             <div className="mt-4">
