@@ -3,11 +3,10 @@ import React, { useState, useEffect } from "react";
 const activities = [
   "Förbättringar i företaget – var ligger din potential?",
   "Potentialen i din data – hur ser din AI-kompass ut?",
-  "Dina pengar – var gör de mest nytta?",
-  "Vilken slags företagare är du?"
+  "Dina pengar – var gör de mest nytta?"
 ];
 
-export default function LoopScreen({ onContinue }) {
+export default function LoopScreen() {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
 
@@ -23,10 +22,7 @@ export default function LoopScreen({ onContinue }) {
   }, []);
 
   return (
-    <div
-      onClick={onContinue}
-      className="flex flex-col items-center justify-center text-center w-full h-full p-8 cursor-pointer"
-    >
+    <div className="flex flex-col items-center justify-center text-center w-full h-full p-8">
       <h1 className="text-5xl sm:text-6xl md:text-[10vw] font-extrabold text-white drop-shadow-md mb-6 leading-tight">
         Företagslabbet
       </h1>
@@ -46,10 +42,6 @@ export default function LoopScreen({ onContinue }) {
           </span>
         ))}
       </div>
-      
-      <p className="absolute bottom-4 text-xs sm:text-sm text-white/40 italic">
-      Tryck för att fortsätta
-      </p>
     </div>
   );
 }
