@@ -50,10 +50,7 @@ export default function AiCompassBarChart({ data }) {
 
             <div className="mt-4">
               <p className="text-sm sm:text-base font-semibold">{labels[key]}</p>
-              <p className="text-sm sm:text-base text-white/60">Du: {valueLabel(data.current[key])}</p>
-              <p className="text-sm sm:text-base text-white/40">
-                Snitt: {valueLabel(Math.round(data.average[key]))}
-              </p>
+              <p className="text-sm sm:text-base text-white/60">{valueLabel(data.current[key])}</p>
             </div>
           </div>
         ))}

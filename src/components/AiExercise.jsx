@@ -219,7 +219,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
             <div className="text-center pt-8 min-h-[28rem]">
               <h2 className="text-2xl sm:text-3xl font-bold mb-4">{scenario.title}</h2>
               <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto">{scenario.text}</p>
-              <div className="flex flex-col gap-4 w-full max-w-md mx-auto">
+              <div className="mt-8 flex flex-col gap-4 w-full max-w-md mx-auto">
                 {scenario.options.map((option, idx) => (
                   <button
                     key={`${scenario.id}-${idx}`}
