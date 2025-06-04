@@ -149,7 +149,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
             }}
             className="mt-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
           >
-            Börja
+            Ok, vi kör!
           </button>
         </div>
       </div>

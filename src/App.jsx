@@ -50,6 +50,18 @@ function App() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
+        {/* “Företagslabbet”-etikett till höger om hamburgarikonen */}
+        {view !== "home" && (
+          <button
+            className="absolute top-4 left-16 h-10 flex items-center text-xl font-bold text-white focus:outline-none"
+            onClick={() => {
+              setView("home");
+              setIsSidebarOpen(false);
+            }}
+          >
+            Företagslabbet
+          </button>
+        )}
 
         {/* Sidebar menu */}
         <SideBarMenu

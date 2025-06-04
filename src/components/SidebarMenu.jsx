@@ -39,14 +39,6 @@ export default function SidebarMenu({ isOpen, onClose, onNavigate }) {
         <nav className="flex flex-col p-4 space-y-2">
           <button
             onClick={() => {
-              onNavigate("home");
-            }}
-            className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
-          >
-            Startsida
-          </button>
-          <button
-            onClick={() => {
               onNavigate("aistart");
             }}
             className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
