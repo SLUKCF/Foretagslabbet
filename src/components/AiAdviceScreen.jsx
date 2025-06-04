@@ -13,7 +13,7 @@ export default function AiAdviceScreen({ onBack }) {
         <li>
           <strong>Filtrera vad du delar</strong><br />
           ✓ Ställ in AI:n efter dina behov. <br />
-          ✓ Skriv gärna en enkel intern policy för dig och eventuell personal.
+          ✓ Skriv en enkel intern policy för dig och eventuell personal.
         </li>
         <li>
           <strong>Lär dig mer</strong><br />

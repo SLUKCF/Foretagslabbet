@@ -37,33 +37,38 @@ export default function SidebarMenu({ isOpen, onClose, onNavigate }) {
             </button>
         </div>
         <nav className="flex flex-col p-4 space-y-2">
-          <button
-            onClick={() => {
-              onNavigate("aistart");
-            }}
+            <button
+                onClick={() => {
+                onNavigate("aistart");
+                }}
+                className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
+            >
+                AI-kompassen
+            </button>
+            <button
+                onClick={() => {
+                onNavigate("aiadvice");
+                }}
+                className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
+            >
+                Råd om AI & data
+            </button>
+            <button
+                onClick={() => {
+                onNavigate("history");
+                }}
+                className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
+            >
+                Historik
+            </button>
+            <button
             className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
-          >
-            AI-kompassen
-          </button>
-          <button
-            onClick={() => {
-              onNavigate("aiadvice");
-            }}
-            className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
-          >
-            Råd om AI & data
-          </button>
-          <button
-            onClick={() => {
-              onNavigate("history");
-            }}
-            className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
-          >
-            Historik
-          </button>
+            >
+                Om oss
+            </button>
         </nav>
       <div className="mt-auto px-4 py-2 text-xs text-white/50 border-t border-white/20">
-        v1.0.48
+        v1.0.49
       </div>
       </aside>
     </>
