@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import CompassBarChart from "./CompassBarChart";
+import AiCompassBarChart from "./AiCompassBarChart";
 
-export default function DataPotentialExercise({ onBack, onAdvice, onLogSession, sessionHistory }) {
+export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHistory }) {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showIntro, setShowIntro] = useState(true);
@@ -164,7 +164,7 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession, 
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6">Din AI-kompass</h2>
-          <CompassBarChart
+          <AiCompassBarChart
             data={{
               current: compass,
               average: calculateAverageCompass()
@@ -172,7 +172,7 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession, 
           />
           <button
             onClick={restart}
-            className="mt-6 px-6 py-2 border border-white text-white rounded-lg hover:bg-white/10"
+            className="mt-6 px-6 py-2 border border-white text-white rounded bg-white/10 hover:bg-white/20 transition"
           >
             Gör om övningen
           </button>

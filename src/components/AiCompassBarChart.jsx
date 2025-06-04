@@ -21,7 +21,7 @@ const getHeight = (v) => {
   return `${normalized * 100}%`;
 };
 
-export default function CompassBarChart({ data }) {
+export default function AiCompassBarChart({ data }) {
   return (
     <div className="w-full max-w-4xl mx-auto px-4 sm:px-6">
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center">

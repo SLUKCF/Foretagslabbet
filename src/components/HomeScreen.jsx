@@ -6,7 +6,7 @@ const activities = [
   "Dina pengar – var gör de mest nytta?"
 ];
 
-export default function LoopScreen() {
+export default function HomeScreen() {
   const [index, setIndex] = useState(0);
   const [fade, setFade] = useState(true);
 

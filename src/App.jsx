@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import LoopScreen from "./components/LoopScreen";
+import HomeScreen from "./components/HomeScreen";
 import SideBarMenu from "./components/SideBarMenu";
-import DataPotentialExercise from "./components/DataPotentialExercise";
-import AdviceView from "./components/AdviceView";
-import HistoryView from "./components/HistoryView";
+import AiStartScreen from "./components/AiStartScreen";
+import AiExercise from "./components/AiExercise";
+import AiAdviceScreen from "./components/AiAdviceScreen";
+import HistoryScreen from "./components/HistoryScreen";
 
 function App() {
-  const [view, setView] = React.useState("loop");
-  const [previousView, setPreviousView] = React.useState("loop");
+  const [view, setView] = React.useState("home");
+  const [previousView, setPreviousView] = React.useState("home");
   const [sessionHistory, setSessionHistory] = React.useState([]);
   // Load saved history from localStorage on mount
   useEffect(() => {
@@ -61,18 +62,21 @@ function App() {
           }}
         />
 
-        {view === "loop" && <LoopScreen />}
-        {view === "exercise" && (
-          <DataPotentialExercise
-            onBack={() => setView("loop")}
-            onAdvice={() => setView("advice")}
+        {view === "home" && <HomeScreen />}
+        {view === "aistart" && (
+          <AiStartScreen onBegin={() => setView("aiexercise")} />
+        )}
+        {view === "aiexercise" && (
+          <AiExercise
+            onBack={() => setView("aistart")}
+            onAdvice={() => setView("aiadvice")}
             onLogSession={logSession}
             sessionHistory={sessionHistory}
           />
         )}
-        {view === "advice" && <AdviceView onBack={() => setView("loop")} />}
+        {view === "aiadvice" && <AiAdviceScreen onBack={() => setView("aistart")} />}
         {view === "history" && (
-          <HistoryView
+          <HistoryScreen
             onBack={() => setView(previousView)}
             sessionHistory={sessionHistory}
           />
