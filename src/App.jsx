@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LoopScreen from "./components/LoopScreen";
 import SideBarMenu from "./components/SideBarMenu";
 import DataPotentialExercise from "./components/DataPotentialExercise";
@@ -9,11 +9,26 @@ function App() {
   const [view, setView] = React.useState("loop");
   const [previousView, setPreviousView] = React.useState("loop");
   const [sessionHistory, setSessionHistory] = React.useState([]);
+  // Load saved history from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("aiSessionHistory");
+    if (stored) {
+      try {
+        setSessionHistory(JSON.parse(stored));
+      } catch (e) {
+        console.error("Kunde inte tolka sparad sessionHistory:", e);
+      }
+    }
+  }, []);
 	const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   
   const logSession = (sessionData) => {
     setSessionHistory((prev) => [...prev, sessionData]);
   };
+  // Persist sessionHistory to localStorage whenever it updates
+  useEffect(() => {
+    localStorage.setItem("aiSessionHistory", JSON.stringify(sessionHistory));
+  }, [sessionHistory]);
 
   return (
     <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-hidden">
@@ -52,6 +67,7 @@ function App() {
             onBack={() => setView("loop")}
             onAdvice={() => setView("advice")}
             onLogSession={logSession}
+            sessionHistory={sessionHistory}
           />
         )}
         {view === "advice" && <AdviceView onBack={() => setView("loop")} />}

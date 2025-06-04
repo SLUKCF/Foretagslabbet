@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import CompassBarChart from "./CompassBarChart";
-import CompassMosaicChart from "./CompassMosaicChart";
 
-export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }) {
+export default function DataPotentialExercise({ onBack, onAdvice, onLogSession, sessionHistory }) {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [viewMode, setViewMode] = useState("bars");
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
   const [sessionStartTime, setSessionStartTime] = useState(null);
@@ -50,6 +48,30 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
       tillit: answers.scenario2 ?? 0,
       öppenhet: answers.scenario3 ?? 0,
       autonomi: answers.scenario4 ?? 0
+    };
+  };
+
+  const calculateAverageCompass = () => {
+    if (!sessionHistory || sessionHistory.length === 0) {
+      return { delningsvilja: 0, tillit: 0, öppenhet: 0, autonomi: 0 };
+    }
+    const sums = sessionHistory.reduce(
+      (acc, session) => {
+        const answers = session.answers;
+        acc.delningsvilja += answers.scenario1 ?? 0;
+        acc.tillit += answers.scenario2 ?? 0;
+        acc.öppenhet += answers.scenario3 ?? 0;
+        acc.autonomi += answers.scenario4 ?? 0;
+        return acc;
+      },
+      { delningsvilja: 0, tillit: 0, öppenhet: 0, autonomi: 0 }
+    );
+    const count = sessionHistory.length;
+    return {
+      delningsvilja: sums.delningsvilja / count,
+      tillit: sums.tillit / count,
+      öppenhet: sums.öppenhet / count,
+      autonomi: sums.autonomi / count
     };
   };
 
@@ -136,27 +158,18 @@ export default function DataPotentialExercise({ onBack, onAdvice, onLogSession }
 
   if (showSummary) {
     const compass = calculateCompassData();
+    console.log("sessionHistory i showSummary:", sessionHistory);
+    console.log("Beräknat genomsnitt:", calculateAverageCompass());
     return (
       <div className="flex flex-col items-center justify-center text-center px-4 sm:px-6 py-8 w-full max-w-4xl">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-bold mb-6">Din AI-kompass</h2>
-          <div onClick={() => setViewMode(viewMode === "bars" ? "mosaic" : "bars")} className="cursor-pointer">
-            {viewMode === "bars" ? (
-              <CompassBarChart
-                data={{
-                  current: compass,
-                  average: {
-                    delningsvilja: 0,
-                    tillit: -1,
-                    öppenhet: 1,
-                    autonomi: 0
-                  }
-                }}
-              />
-            ) : (
-              <CompassMosaicChart data={compass} />
-            )}
-          </div>
+          <CompassBarChart
+            data={{
+              current: compass,
+              average: calculateAverageCompass()
+            }}
+          />
           <button
             onClick={restart}
             className="mt-6 px-6 py-2 border border-white text-white rounded-lg hover:bg-white/10"
