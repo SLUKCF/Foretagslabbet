@@ -23,12 +23,12 @@ const getHeight = (v) => {
 
 export default function AiCompassBarChart({ data }) {
   return (
-    <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 lg:px-6 mt-4 max-h-[80vh] overflow-y-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 md:gap-10 text-center">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 mt-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-10 text-center">
         {Object.keys(data.current).map((key) => (
           <div key={key} className="flex flex-col items-center">
             {/* Här har varje stapels “container” en fast höjd: h-40 (=10rem) för små skärmar och sm:h-48 (=12rem) för större */}
-            <div className="relative w-16 h-32 sm:w-20 sm:h-48 md:h-64 bg-white/10 rounded shadow-inner">
+            <div className="relative w-20 h-56 sm:h-64 bg-white/10 rounded shadow-inner">
               {/* Deltagarens stapel */}
               <div
                 className="absolute bottom-0 left-0 w-full bg-[#CEDA00] rounded-t"
@@ -53,8 +53,8 @@ export default function AiCompassBarChart({ data }) {
             </div>
 
             <div className="mt-4">
-              <p className="text-xs sm:text-sm md:text-base font-semibold">{labels[key]}</p>
-              <p className="text-xs sm:text-sm md:text-base text-white/60">{valueLabel(data.current[key])}</p>
+              <p className="text-sm sm:text-base font-semibold">{labels[key]}</p>
+              <p className="text-sm sm:text-base text-white/60">{valueLabel(data.current[key])}</p>
             </div>
           </div>
         ))}
