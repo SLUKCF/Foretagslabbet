@@ -28,7 +28,7 @@ export default function AiCompassBarChart({ data }) {
         {Object.keys(data.current).map((key) => (
           <div key={key} className="flex flex-col items-center">
             {/* Här har varje stapels “container” en fast höjd: h-40 (=10rem) för små skärmar och sm:h-48 (=12rem) för större */}
-            <div className="relative w-16 h-32 sm:w-20 sm:h-56 md:h-64 bg-white/10 rounded shadow-inner">
+            <div className="relative w-16 h-32 sm:w-20 sm:h-48 md:h-64 bg-white/10 rounded shadow-inner">
               {/* Deltagarens stapel */}
               <div
                 className="absolute bottom-0 left-0 w-full bg-[#CEDA00] rounded-t"
