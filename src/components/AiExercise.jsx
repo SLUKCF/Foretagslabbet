@@ -79,7 +79,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
     {
       id: "scenario1",
       title: "Kartläggning – dina data, din mark",
-      text: "Du erbjuds att använda en AI-tjänst som hjälper dig att kartlägga dina jordarter, pH och vattenhållande förmåga – i utbyte mot att du laddar upp skördekartor och markdata.",
+      text: "Du erbjuds att använda en AI-tjänst som hjälper dig att analysera dina jordarter, pH och vattenhållande förmåga – i utbyte mot att du laddar upp skördekartor och markdata.",
       options: [
         { text: "Ja, det är värt det – datan är inte känslig", score: 1 },
         { text: "Kanske – om jag vet hur den används", score: 0 },
@@ -112,7 +112,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
       text: "Efter två säsonger fungerar systemet bra – men AI:n fungerar bara inom leverantörens ekosystem. Du måste betala för att fortsätta, annars förloras historiken.",
       options: [
         { text: "Jag vill inte bli låst", score: 1 },
-        { text: "Jag vill kunna byta fritt", score: 0 },
+        { text: "Jag kanske kan byta senare", score: 0 },
         { text: "Det är okej – det fungerar", score: -1 }
       ]
     }
@@ -172,7 +172,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
           />
           <button
             onClick={restart}
-            className="mt-6 px-6 py-2 border border-white text-white rounded bg-white/10 hover:bg-white/20 transition"
+            className="mt-6 px-6 py-2 border border-white text-white rounded-lg bg-white/10 hover:bg-white/20 transition"
           >
             Gör om övningen
           </button>
