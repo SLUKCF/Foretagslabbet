@@ -49,13 +49,13 @@ function HistoryScreen({ onBack, sessionHistory }) {
       <div className="mt-4 flex space-x-4">
         <button
           onClick={onBack}
-          className="px-6 py-2 border border-white text-white rounded bg-white/10 hover:bg-white/20 transition"
+          className="px-6 py-2 border border-white text-white rounded-lg bg-white/10 hover:bg-white/20"
         >
           Tillbaka
         </button>
         <button
           onClick={downloadCSV}
-          className="px-6 py-2 bg-[#CEDA00] text-black rounded hover:bg-[#b8c500] transition"
+          className="px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
         >
           Ladda ner som CSV
         </button>

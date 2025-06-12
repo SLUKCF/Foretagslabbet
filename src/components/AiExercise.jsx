@@ -172,13 +172,13 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
           />
           <button
             onClick={restart}
-            className="mt-6 px-6 py-2 border border-white text-white rounded-lg bg-white/10 hover:bg-white/20 transition"
+            className="mt-6 mx-2 px-6 py-2 rounded-lg text-white bg-white/10 hover:bg-white/20"
           >
             Gör om övningen
           </button>
           <button
             onClick={onAdvice}
-            className="mt-4 ml-4 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
+            className="mt-2 mx-2 px-6 py-2 rounded-lg text-black bg-[#CEDA00] hover:bg-[#b8c500]"
           >
             Nästa: Några råd på vägen
           </button>
