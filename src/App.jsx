@@ -6,6 +6,8 @@ import AiExercise from "./components/AiExercise";
 import AiAdviceScreen from "./components/AiAdviceScreen";
 import HistoryScreen from "./components/HistoryScreen";
 import OmOssScreen from "./components/OmOssScreen";
+import InfoOverlay from "./components/InfoOverlay";
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
 function App() {
   const [view, setView] = React.useState("home");
@@ -23,6 +25,9 @@ function App() {
     }
   }, []);
 	const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
+
+  const [showInfo, setShowInfo] = React.useState(false);
+  const [infoContext, setInfoContext] = React.useState(null);
   
   const logSession = (sessionData) => {
     setSessionHistory((prev) => [...prev, sessionData]);
@@ -33,7 +38,7 @@ function App() {
   }, [sessionHistory]);
 
   return (
-    <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-hidden">
+    <div className="w-screen min-h-screen h-screen text-white flex items-center justify-center overflow-auto">
       <div className="fixed inset-0 bg-[#007b87] z-0"></div>
       <div className="relative z-10 w-full h-full flex items-center justify-center">
         {/* Hamburger button in top-left */}
@@ -64,6 +69,18 @@ function App() {
           </button>
         )}
 
+        {/* Informationsknapp höger-centrerad */}
+        {["aiexercise", "aistart"].includes(view) && (
+          <button
+            className="absolute top-4 right-4 p-2 focus:outline-none z-50"
+            onClick={() => {
+              setShowInfo(true);
+            }}
+          >
+            <InformationCircleIcon className="h-6 w-6 text-white" />
+          </button>
+        )}
+
         {/* Sidebar menu */}
         <SideBarMenu
           isOpen={isSidebarOpen}
@@ -77,7 +94,11 @@ function App() {
 
         {view === "home" && <HomeScreen />}
         {view === "aistart" && (
-          <AiStartScreen onBegin={() => setView("aiexercise")} />
+          <AiStartScreen
+            onBegin={() => setView("aiexercise")}
+            showInfo={showInfo}
+            setInfoContext={setInfoContext}
+          />
         )}
         {view === "aiexercise" && (
           <AiExercise
@@ -85,6 +106,8 @@ function App() {
             onAdvice={() => setView("aiadvice")}
             onLogSession={logSession}
             sessionHistory={sessionHistory}
+            showInfo={showInfo}
+            setInfoContext={setInfoContext}
           />
         )}
         {view === "aiadvice" && <AiAdviceScreen onBack={() => setView("aistart")} />}
@@ -96,6 +119,18 @@ function App() {
         )}
         {view === "omoss" && (
           <OmOssScreen onBack={() => setView(previousView)} />
+        )}
+
+        {console.log("Aktiv infoContext:", infoContext)}
+        {showInfo && infoContext && (
+          <InfoOverlay
+            view={view}
+            infoContext={infoContext}
+            onClose={() => {
+              setShowInfo(false);
+              setInfoContext(null);
+            }}
+          />
         )}
       </div>
     </div>

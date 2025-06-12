@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import AiCompassBarChart from "./AiCompassBarChart";
 
-export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHistory }) {
+export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHistory, showInfo, setInfoContext, onShowInfo }) {
   const [currentScenario, setCurrentScenario] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showIntro, setShowIntro] = useState(true);
   const [showSummary, setShowSummary] = useState(false);
   const [sessionStartTime, setSessionStartTime] = useState(null);
   const [hasLoggedSession, setHasLoggedSession] = useState(false);
+
+  useEffect(() => {
+    if (showInfo) {
+      if (showSummary) {
+        setInfoContext("barChart");
+      } else {
+        setInfoContext("exercise");
+      }
+    }
+  }, [showInfo, showSummary, setInfoContext]);
 
   const restart = () => {
     setCurrentScenario(0);
@@ -169,6 +179,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
               current: compass,
               average: calculateAverageCompass()
             }}
+            onShowInfo={() => onShowInfo("barChart")}
           />
           <button
             onClick={restart}
@@ -178,7 +189,7 @@ export default function AiExercise({ onBack, onAdvice, onLogSession, sessionHist
           </button>
           <button
             onClick={onAdvice}
-            className="mt-2 mx-2 px-6 py-2 rounded-lg text-black bg-[#CEDA00] hover:bg-[#b8c500]"
+            className="mt-4 mx-2 px-6 py-2 rounded-lg text-black bg-[#CEDA00] hover:bg-[#b8c500]"
           >
             Nästa: Några råd på vägen
           </button>

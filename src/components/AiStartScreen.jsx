@@ -1,7 +1,12 @@
 // src/components/AiStartScreen.jsx
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function AiStartScreen({ onBegin }) {
+export default function AiStartScreen({ onBegin, showInfo, setInfoContext }) {
+  useEffect(() => {
+    if (showInfo) {
+      setInfoContext("aistart");
+    }
+  }, [showInfo, setInfoContext]);
   return (
     <div
       className="flex flex-col items-center justify-center text-center px-4 py-8 w-full max-w-3xl cursor-pointer"

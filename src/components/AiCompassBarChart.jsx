@@ -1,4 +1,5 @@
 import React from "react";
+import { UsersIcon } from '@heroicons/react/24/solid';
 
 const labels = {
   delningsvilja: "Delningsvilja",
@@ -51,7 +52,16 @@ export default function AiCompassBarChart({ data }) {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M8 6 L0 0 V12 L8 6 Z" fill="currentColor" />
-              </svg>
+              </svg>              
+              {/* <UsersIcon
+                className="absolute z-10 right-[-10px] w-6 h-6 text-white"
+                style={{
+                  bottom:
+                    data.average[key] <= -1
+                      ? "0px"
+                      : `calc(${getHeight(data.average[key])} - 12px)`,
+                }}
+              /> */}
             </div>
 
             <div className="mt-4">
