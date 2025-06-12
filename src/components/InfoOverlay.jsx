@@ -1,4 +1,5 @@
 import React from "react";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 
 export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
   if (view === "aiexercise" && showInfo && !infoContext) {
@@ -9,10 +10,10 @@ export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
   return (
     <div className="absolute inset-0 z-50 bg-[#007b87]/95 text-white p-6 flex flex-col items-center justify-center text-center">
       <button
-        className="absolute top-4 right-4 text-white"
+        className="absolute top-4 right-4 text-white p-2"
         onClick={onClose}
       >
-        Stäng
+        <XCircleIcon className="h-6 w-6 text-white" /> 
       </button>
       {infoContext === "aistart" && (
         <>

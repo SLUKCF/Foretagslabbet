@@ -71,7 +71,7 @@ export default function SidebarMenu({ isOpen, onClose, onNavigate }) {
             </button>
         </nav>
       <div className="mt-auto px-4 py-2 text-xs text-white/50 border-t border-white/20">
-        v1.0.58
+        v1.0.59
       </div>
       </aside>
     </>
