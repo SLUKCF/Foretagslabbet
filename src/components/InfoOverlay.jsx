@@ -21,7 +21,7 @@ export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">Vad är AI-kompassen?</h2>
                 <p className="text-base sm:text-lg mb-6">
                     AI-kompassen är en övning där du får ta ställning till olika situationer som rör delning av data i samband med AI-användning. 
-                    Syftet är att du ska få syn på dina egna gränser, värderingar och prioriteringar – och reflektera över hur du vill använda AI i din roll som företagare.
+                    Syftet är att du ska få syn på dina egna gränser, värderingar och prioriteringar – och reflektera över hur just <span class="font-bold">du</span> vill använda AI i din roll som företagare.
                 </p>
             </div>
         </>
