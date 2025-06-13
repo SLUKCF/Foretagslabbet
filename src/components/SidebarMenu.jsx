@@ -63,15 +63,15 @@ export default function SidebarMenu({ isOpen, onClose, onNavigate }) {
             </button>
             <button
                 onClick={() => {
-                onNavigate("omoss");
+                onNavigate("about");
                 }}
                 className="text-left py-2 px-3 rounded hover:bg-white/10 transition-colors"
             >
-                Om oss
+                Om Företagslabbet
             </button>
         </nav>
       <div className="mt-auto px-4 py-2 text-xs text-white/50 border-t border-white/20">
-        v1.0.59
+        v1.0.60
       </div>
       </aside>
     </>

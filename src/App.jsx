@@ -5,7 +5,7 @@ import AiStartScreen from "./components/AiStartScreen";
 import AiExercise from "./components/AiExercise";
 import AiAdviceScreen from "./components/AiAdviceScreen";
 import HistoryScreen from "./components/HistoryScreen";
-import OmOssScreen from "./components/OmOssScreen";
+import AboutScreen from "./components/AboutScreen";
 import InfoOverlay from "./components/InfoOverlay";
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
@@ -117,8 +117,8 @@ function App() {
             sessionHistory={sessionHistory}
           />
         )}
-        {view === "omoss" && (
-          <OmOssScreen onBack={() => setView(previousView)} />
+        {view === "about" && (
+          <AboutScreen onBack={() => setView(previousView)} />
         )}
 
         {console.log("Aktiv infoContext:", infoContext)}

@@ -20,8 +20,8 @@ export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
             <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">Vad är AI-kompassen?</h2>
                 <p className="text-base sm:text-lg mb-6">
-                    AI-kompassen hjälper dig att reflektera kring hur du kan använda AI i din verksamhet.
-                    Du får svara på frågor om din data, dina mål och dina förväntningar.
+                    AI-kompassen är en övning där du får ta ställning till olika situationer som rör delning av data i samband med AI-användning. 
+                    Syftet är att du ska få syn på dina egna gränser, värderingar och prioriteringar – och reflektera över hur du vill använda AI i din roll som företagare.
                 </p>
             </div>
         </>
@@ -32,8 +32,25 @@ export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
             <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">Vad visar stapeldiagrammet?</h2>
                 <p className="text-base sm:text-lg mb-6">
-                    Stapeldiagrammet visar hur du förhåller dig till olika aspekter av AI-strategi. 
-                    Pilar och färger hjälper dig att se genomsnitt och variation i svar jämfört med andra.
+                    Diagrammet visar hur dina val fördelar sig längs fyra linjer:
+                </p>
+                <p className="text-base sm:text-lg mb-6">
+                    <span class="font-bold">Delningsvilja:</span> hur villig du är att dela data med en AI.
+                </p>
+                <p className="text-base sm:text-lg mb-6">
+                    <span class="font-bold">Tillit:</span> hur mycket du litar på tekniken bakom AI.
+                </p>
+                <p className="text-base sm:text-lg mb-6">
+                    <span class="font-bold">Öppenhet:</span> hur du ser på datadelning som ett sätt att bidra till branschen.
+                </p>               
+                <p className="text-base sm:text-lg mb-6">
+                    <span class="font-bold">Autonomi:</span> hur självständig du vill vara gentemot AI-leverantörer. 
+                </p>    
+                 <p className="text-base sm:text-lg mb-6">
+                    Du kan också jämföra dina svar med genomsnittet från tidigare deltagare - <span class="font-bold">de vita pilarna</span> i diagrammet.
+                </p>
+                <p className="text-base sm:text-lg mb-6">
+                    När du är klar visas några råd om hur du kan tänka vidare kring datadelning och AI.
                 </p>
             </div>
           </>
@@ -42,8 +59,11 @@ export default function InfoOverlay({ view, infoContext, onClose, showInfo }) {
             <div className="text-center max-w-xl px-4 sm:px-6 mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">Hur fungerar övningen?</h2>
                 <p className="text-base sm:text-lg mb-6">
-                    Du får ta ställning till olika påståenden genom att dra reglagen. Resultatet visas
-                    som en karta över olika AI-strategier. Det hjälper dig att förstå vad som passar bäst för dig.              </p>
+                    Du får följa en kort berättelse om hur AI kan användas i lantbruket. I fyra steg får du ta ställning till olika val. I varje steg gör du ett val och ser hur det påverkar fyra områden: delningsvilja, tillit, öppenhet och autonomi. Resultatet visas i ett diagram som speglar din hållning.
+                </p>
+                <p className="text-base sm:text-lg mb-6">
+                    Det finns inga rätt eller fel!
+                </p>
             </div>
           </>
         )
