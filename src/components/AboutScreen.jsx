@@ -20,7 +20,7 @@ export default function AboutScreen({ onBack }) {
             Välj en aktivitet och följ instruktionerna steg för steg. I olika moment får du göra egna val eller reflektera över din situation som företagare.
         </p>
         <p className="text-lg mb-6">
-            Du kan när som helst be en vägledare om hjälp eller läsa mer i informationsvyerna som du (när det finns mer information) når genom att klicka på ”i” högst upp till höger på skärmen.
+            Du kan när som helst be en vägledare om hjälp eller läsa mer i informationsvyerna som du (när det finns mer information) når genom att klicka på <span className="font-bold">”i”</span> högst upp till höger på skärmen.
         </p>
         <button
             onClick={onBack}
