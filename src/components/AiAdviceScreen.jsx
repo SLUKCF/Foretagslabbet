@@ -17,7 +17,7 @@ export default function AiAdviceScreen({ onBack }) {
         </li>
         <li>
           <strong>Lär dig mer</strong><br />
-          ✓ Ju mer du vet, desto bättre kan du avgöra hur du vill att AI ska användas i ditt företag.
+          ✓ Ju mer du vet, desto bättre kan du avgöra hur <span className="font-bold">du</span> vill att AI ska användas i <span className="font-bold">ditt</span> företag.
         </li>
       </ul>
       <div className="mt-8 text-center">

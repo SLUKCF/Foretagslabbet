@@ -27,7 +27,7 @@ export default function HomeScreen() {
         Företagslabbet
       </h1>
       <p className="text-sm sm:text-base md:text-[1.5vw] mb-8 max-w-md">
-        Kunskapsnav företagsledning och entreprenörskap · HIR Skåne · Green Advisor
+        Kunskapsnav företagsledning och entreprenörskap · HIR Skåne · Green Adviser
       </p>
 
       <div className={`transition-opacity duration-1000 ${fade ? "opacity-100" : "opacity-0"}`}>
