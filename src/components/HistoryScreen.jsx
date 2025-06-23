@@ -45,24 +45,14 @@ function HistoryScreen({ onBack, sessionHistory }) {
   return (
     <div className="flex flex-col items-center justify-center text-center max-w-3xl px-4 py-8">
       <h2 className="text-2xl sm:text-3xl font-bold mb-4">Historik</h2>
-      {/* Knappar för Tillbaka och Export CSV */}
-      <div className="mt-4 flex space-x-4">
-        <button
-          onClick={onBack}
-          className="px-6 py-2 border border-white text-white rounded-lg bg-white/10 hover:bg-white/20"
-        >
-          Tillbaka
-        </button>
-        <button
-          onClick={downloadCSV}
-          className="px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
-        >
-          Ladda ner som CSV
-        </button>
+      
+      <div className="text-center mb-2">
+        <p className="text-base sm:text-lg">
+          Antal omgångar av AI-kompassen: {sessionHistory.length}
+        </p>
       </div>
-      <br/>
       {sessionHistory.length > 0 ? (
-        <>
+        <div className="max-h-[500px] overflow-y-auto">
           <table className="table-auto w-full mt-4 bg-white/10 rounded-lg overflow-hidden">
             <thead className="bg-[#00CEDA]">
               <tr>
@@ -87,11 +77,26 @@ function HistoryScreen({ onBack, sessionHistory }) {
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       ) : (
         <p className="text-sm text-white/50">Ingen historik ännu.</p>
       )}
 
+      {/* Knappar för Tillbaka och Export CSV */}
+      <div className="mt-4 flex space-x-4">
+        <button
+          onClick={onBack}
+          className="mt-6 mx-2 px-6 py-2 border border-white text-white rounded-lg bg-white/10 hover:bg-white/20"
+        >
+          Tillbaka
+        </button>
+        <button
+          onClick={downloadCSV}
+          className="mt-6 mx-2 px-6 py-2 bg-[#CEDA00] text-black rounded-lg hover:bg-[#b8c500]"
+        >
+          Ladda ner som CSV
+        </button>
+      </div>
     </div>
   );
 }
